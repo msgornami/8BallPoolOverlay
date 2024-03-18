@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/boardRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -36,7 +37,7 @@
             android:visibility="gone" />
 
         <Button
-            android:id="@+id/btn_normal"
+            android:id="@+id/btnNormal"
             android:layout_width="@dimen/buttonWidth"
             android:layout_height="@dimen/buttonHeight"
             android:layout_marginStart="@dimen/buttonNormalMarginStart"
@@ -49,18 +50,18 @@
             tools:ignore="ContentDescription" />
 
         <Button
-            android:id="@+id/btn_trickshot"
+            android:id="@+id/btnTrickshot"
             android:layout_width="@dimen/buttonWidth"
             android:layout_height="@dimen/buttonHeight"
             android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/btn_normal"
+            android:layout_toEndOf="@+id/btnNormal"
             android:background="@drawable/button_trickshot"
             android:text="@string/trickshot"
             android:textColor="@color/colorWhite"
             tools:ignore="ContentDescription" />
 
         <Button
-            android:id="@+id/btn_nineBall"
+            android:id="@+id/btnNineBall"
             android:layout_width="@dimen/buttonWidth"
             android:layout_height="@dimen/buttonHeight"
             android:layout_marginEnd="@dimen/buttonNineBallMarginEnd"

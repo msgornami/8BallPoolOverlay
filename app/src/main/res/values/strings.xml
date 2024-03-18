@@ -3,7 +3,7 @@
     <string name="app_name">8 Ball Overlay</string>
     <string name="normal">NORMAL</string>
     <string name="trickshot">TRICKSHOT</string>
-    <string name="nineBall">9 Ball</string>
+    <string name="nineBall">9 BALL</string>
     <string name="hide">HIDE</string>
-    <string name="close">CLOSE</string>
+    <string name="stop">STOP</string>
 </resources>
