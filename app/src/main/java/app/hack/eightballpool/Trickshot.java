@@ -10,6 +10,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
 public class Trickshot extends View {
     private Paint line;
     private Paint reflectLine;
@@ -143,12 +145,10 @@ public class Trickshot extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_DOWN -> {
                 xOnTouch = event.getX();
                 yOnTouch = event.getY();
-
                 trackStatus = false;
-
                 if (xOnTouch > (xCircleOne - radiusCircleOne)
                         && xOnTouch < (xCircleOne + radiusCircleOne)
                         && yOnTouch > (yCircleOne - radiusCircleOne)
@@ -157,7 +157,6 @@ public class Trickshot extends View {
                     trackStatus = true;
                     circle = 1;
                 }
-
                 if (xOnTouch > (xCircleTwo - radiusCircleTwo)
                         && xOnTouch < (xCircleTwo + radiusCircleTwo)
                         && yOnTouch > (yCircleTwo - radiusCircleTwo)
@@ -166,7 +165,6 @@ public class Trickshot extends View {
                     trackStatus = true;
                     circle = 2;
                 }
-
                 if (xOnTouch > (xCircleAuxTop - radiusCircleAux)
                         && xOnTouch < (xCircleAuxTop + radiusCircleAux)
                         && yOnTouch > (yCircleAuxTop - radiusCircleAux)
@@ -175,7 +173,6 @@ public class Trickshot extends View {
                     trackStatus = true;
                     circle = 3;
                 }
-
                 if (xOnTouch > (xCircleAuxBottom - radiusCircleAux)
                         && xOnTouch < (xCircleAuxBottom + radiusCircleAux)
                         && yOnTouch > (yCircleAuxBottom - radiusCircleAux)
@@ -184,7 +181,6 @@ public class Trickshot extends View {
                     trackStatus = true;
                     circle = 4;
                 }
-
                 if (xOnTouch > (xCircleAuxControls - radiusCircleAuxControls)
                         && xOnTouch < (xCircleAuxControls + radiusCircleAuxControls)
                         && yOnTouch > (yCircleAuxControls - radiusCircleAuxControls)
@@ -253,14 +249,11 @@ public class Trickshot extends View {
                     xCircleAuxBottom = xCircleOne - 110;
                     yCircleAuxBottom = yCircleOne + 140;
                 }
-
                 invalidate();
-                
-                break;
-            case MotionEvent.ACTION_MOVE:
+            }
+            case MotionEvent.ACTION_MOVE -> {
                 xOnMotion = event.getX();
                 yOnMotion = event.getY();
-
                 if (circle == 1) {
                     xCircleOne = xOnMotion;
                     yCircleOne = yOnMotion;
@@ -273,7 +266,6 @@ public class Trickshot extends View {
 
                     checkCircleOneCollision();
                 }
-
                 if (circle == 2) {
                     xCircleTwo = xOnMotion;
                     yCircleTwo = yOnMotion;
@@ -304,7 +296,6 @@ public class Trickshot extends View {
                         touchedTheWall = true;
                     }
                 }
-
                 if (circle == 3) {
                     xCircleAuxTop = xOnMotion;
                     yCircleAuxTop = yOnMotion;
@@ -317,7 +308,6 @@ public class Trickshot extends View {
 
                     checkCircleOneCollision();
                 }
-
                 if (circle == 4) {
                     xCircleAuxBottom = xOnMotion;
                     yCircleAuxBottom = yOnMotion;
@@ -330,7 +320,6 @@ public class Trickshot extends View {
 
                     checkCircleOneCollision();
                 }
-
                 if (circle == 5) {
                     yCircleAuxControls = yOnMotion;
 
@@ -348,23 +337,17 @@ public class Trickshot extends View {
 
                     checkCircleAuxControlsCollision();
                 }
-
                 trackStatus = true;
-
                 invalidate();
-                
-                break;
-            case MotionEvent.ACTION_UP:
-                trackStatus = false;
-
-                break;
+            }
+            case MotionEvent.ACTION_UP -> trackStatus = false;
         }
 
         return trackStatus;
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
 
         canvas.drawLine(xCircleOne, yCircleOne, xCircleTwo, yCircleTwo, line);

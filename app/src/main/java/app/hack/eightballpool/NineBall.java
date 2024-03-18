@@ -7,6 +7,8 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
 public class NineBall extends View {
     private Paint line;
     private Paint circleOne;
@@ -59,7 +61,7 @@ public class NineBall extends View {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
 
         canvas.drawLine(xStartLine, yStartLine, xEndLine, yEndLine, line);

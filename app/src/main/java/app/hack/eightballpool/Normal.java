@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
 public class Normal extends View {
     private Paint line, shadow, circle;
 
@@ -66,20 +68,17 @@ public class Normal extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_DOWN -> {
                 xOnTouch = event.getX();
                 yOnTouch = event.getY();
-
                 trackStatus = xOnTouch > (xCircle - radius)
                         && xOnTouch < (xCircle + radius)
                         && yOnTouch > (yCircle - radius)
                         && yOnTouch < (yCircle + radius);
-
-                break;
-            case MotionEvent.ACTION_MOVE:
+            }
+            case MotionEvent.ACTION_MOVE -> {
                 xOnMotion = event.getX();
                 yOnMotion = event.getY();
-
                 xCircle = xOnMotion;
                 yCircle = yOnMotion;
 
@@ -102,23 +101,17 @@ public class Normal extends View {
                 if (xCircle > getWidth()) {
                     xCircle = getWidth();
                 }
-
                 trackStatus = true;
-
                 invalidate();
-
-                break;
-            case MotionEvent.ACTION_UP:
-                trackStatus = false;
-                
-                break;
+            }
+            case MotionEvent.ACTION_UP -> trackStatus = false;
         }
 
         return trackStatus;
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
 
         // Middle top
