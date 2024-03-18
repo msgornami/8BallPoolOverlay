@@ -13,6 +13,7 @@ class OverlayView(val binding: BoardOverlayBinding, private val resources: Resou
 
     private fun showNormal() {
         with(binding) {
+            board.visibility = View.VISIBLE
             trickshot.visibility = View.GONE
             nineBall.visibility = View.GONE
             normal.visibility = View.VISIBLE
@@ -25,6 +26,7 @@ class OverlayView(val binding: BoardOverlayBinding, private val resources: Resou
 
     private fun showTrickshot() {
         with(binding) {
+            board.visibility = View.VISIBLE
             normal.visibility = View.GONE
             nineBall.visibility = View.GONE
             trickshot.visibility = View.VISIBLE
@@ -39,6 +41,7 @@ class OverlayView(val binding: BoardOverlayBinding, private val resources: Resou
 
     private fun showNineBall() {
         with(binding) {
+            board.visibility = View.VISIBLE
             normal.visibility = View.GONE
             trickshot.visibility = View.GONE
             nineBall.visibility = View.VISIBLE
@@ -94,10 +97,9 @@ class OverlayView(val binding: BoardOverlayBinding, private val resources: Resou
 
     private val hide = View.OnClickListener {
         Log.d(TAG, "hide")
+        it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
         with(binding) {
-            normal.visibility = View.GONE
-            trickshot.visibility = View.GONE
-            nineBall.visibility = View.GONE
+            board.visibility = View.GONE
         }
     }
 
