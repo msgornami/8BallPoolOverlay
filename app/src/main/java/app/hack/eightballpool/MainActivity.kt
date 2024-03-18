@@ -1,10 +1,13 @@
 package app.hack.eightballpool
 
+import android.Manifest
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 
@@ -14,10 +17,14 @@ class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
     private val gamePackage = "com.miniclip.eightballpool"
 
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate")
         super.onCreate(savedInstanceState)
 
+        getNotificationPermission()
         getDeviceDimensions()
     }
 
@@ -75,6 +82,14 @@ class MainActivity : AppCompatActivity() {
         runCatching { startActivity(playStoreIntent) }.onFailure {
             Log.e(
                 TAG, "launchPlayStore", it
+            )
+        }
+    }
+
+    private fun getNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissionLauncher.launch(
+                Manifest.permission.POST_NOTIFICATIONS
             )
         }
     }
