@@ -21,10 +21,15 @@ import app.hack.eightballpool.databinding.BoardOverlayBinding
 
 class OverlayService : Service() {
 
+    companion object {
+        const val ACTION_STOP_SERVICE = "ACTION_STOP_SERVICE"
+        const val ACTION_START_SERVICE = "ACTION_START_SERVICE"
+    }
+
     private val TAG = "OverlayService"
     private val CHANNEL_ID = "OverlayServiceChannel"
     private val NOTIFICATION_ID = 888
-    private val ACTION_STOP_SERVICE = "ACTION_STOP_SERVICE"
+
     private val windowManager: WindowManager
         get() = getSystemService(WINDOW_SERVICE) as WindowManager
 
@@ -41,18 +46,18 @@ class OverlayService : Service() {
         startForeground(NOTIFICATION_ID, createNotification())
 
         val binding = BoardOverlayBinding.inflate(LayoutInflater.from(this))
-        overlayView = OverlayView(binding, resources)
-        addView(binding.root)
+        overlayView = OverlayView(binding, resources) {
+            removeView(overlayView.binding.root)
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.d(TAG, "onStartCommand")
+        Log.d(TAG, "Action: ${intent?.action}")
+
         when (intent?.action) {
-            ACTION_STOP_SERVICE -> {
-                Log.d(TAG, ACTION_STOP_SERVICE)
-                stopForeground(STOP_FOREGROUND_REMOVE)
-                stopSelf()
-            }
+            ACTION_STOP_SERVICE -> stopService()
+            ACTION_START_SERVICE -> addView(overlayView.binding.root)
         }
 
         return START_NOT_STICKY
@@ -62,7 +67,7 @@ class OverlayService : Service() {
         Log.d(TAG, "onDestroy")
         super.onDestroy()
 
-        windowManager.removeView(overlayView.binding.root)
+        removeView(overlayView.binding.root)
     }
 
     private fun createNotificationChannel() {
@@ -84,20 +89,43 @@ class OverlayService : Service() {
         val stopPendingIntent =
             PendingIntent.getService(
                 this, 0, stopIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                PendingIntent.FLAG_IMMUTABLE
             )
+
+        val startIntent = Intent(this, OverlayService::class.java)
+        startIntent.setAction(ACTION_START_SERVICE)
+
+        val startPendingIntent =
+            PendingIntent.getService(
+                this, 0, startIntent,
+                PendingIntent.FLAG_IMMUTABLE
+            )
+
+        val homePendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            Intent(this, HomeActivity::class.java),
+            PendingIntent.FLAG_IMMUTABLE
+        )
 
         val builder: NotificationCompat.Builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentText(getString(R.string.app_name))
             .setSmallIcon(R.drawable.ic_8_ball)
             .setOngoing(true)
             .setPriority(NotificationCompat.PRIORITY_LOW)
-            .addAction(0, getString(R.string.stop), stopPendingIntent);
+            .addAction(0, getString(R.string.start), startPendingIntent)
+            .addAction(0, getString(R.string.stop), stopPendingIntent)
+            .setContentIntent(homePendingIntent)
+            .setDeleteIntent(stopPendingIntent)
+            .setAutoCancel(true)
 
         return builder.build()
     }
 
     private fun addView(view: View) {
+        if (view.parent != null) return
+        Log.d(TAG, "addView")
+
         val boardMarginBottom = resources.getDimension(R.dimen.boardMarginBottom)
         val params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT,
@@ -111,5 +139,18 @@ class OverlayService : Service() {
         params.gravity = Gravity.BOTTOM or Gravity.CENTER
         params.verticalMargin = boardMarginBottom
         windowManager.addView(view, params)
+    }
+
+    private fun removeView(view: View) {
+        if (view.parent != null) {
+            Log.d(TAG, "removeView")
+            windowManager.removeView(view)
+        }
+    }
+
+    private fun stopService() {
+        Log.d(TAG, "stopService")
+        stopForeground(STOP_FOREGROUND_REMOVE)
+        stopSelf()
     }
 }

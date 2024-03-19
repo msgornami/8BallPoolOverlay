@@ -7,7 +7,11 @@ import android.view.View
 import androidx.core.view.isVisible
 import app.hack.eightballpool.databinding.BoardOverlayBinding
 
-class OverlayView(val binding: BoardOverlayBinding, private val resources: Resources) {
+class OverlayView(
+    val binding: BoardOverlayBinding,
+    private val resources: Resources,
+    private val onDismissCallback: () -> Unit
+) {
 
     private val TAG = "OverlayView"
 
@@ -100,13 +104,23 @@ class OverlayView(val binding: BoardOverlayBinding, private val resources: Resou
         it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
         with(binding) {
             board.visibility = View.GONE
+            btnNormal.setBackgroundResource(R.drawable.button_normal)
+            btnTrickshot.setBackgroundResource(R.drawable.button_trickshot)
+            btnNineBall.setBackgroundResource(R.drawable.button_nineball)
         }
     }
 
     init {
-        binding.btnNormal.setOnClickListener(showNormal)
-        binding.btnTrickshot.setOnClickListener(showTrickshot)
-        binding.btnNineBall.setOnClickListener(showNineBall)
-        binding.btnHide.setOnClickListener(hide)
+        with(binding) {
+            btnNormal.setOnClickListener(showNormal)
+            btnTrickshot.setOnClickListener(showTrickshot)
+            btnNineBall.setOnClickListener(showNineBall)
+            btnHide.setOnClickListener(hide)
+            btnHide.setOnLongClickListener {
+                Log.d(TAG, "onDismiss")
+                onDismissCallback()
+                true
+            }
+        }
     }
 }

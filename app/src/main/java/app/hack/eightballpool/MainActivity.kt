@@ -59,8 +59,10 @@ class MainActivity : AppCompatActivity() {
             launchPlayStore()
         } else {
             Log.d(TAG, "launchGame")
+            val serviceIntent = Intent(this, OverlayService::class.java)
+            serviceIntent.setAction(OverlayService.ACTION_START_SERVICE)
             ContextCompat.startForegroundService(
-                this, Intent(this, OverlayService::class.java)
+                this, serviceIntent
             )
 
             runCatching { startActivity(gameIntent) }.onFailure {
