@@ -12,10 +12,15 @@ import android.graphics.PixelFormat
 import android.os.IBinder
 import android.util.Log
 import android.view.Gravity
+import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import android.widget.Button
+import android.widget.ImageButton
 import androidx.core.app.NotificationCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import app.hack.eightballpool.databinding.BoardOverlayBinding
 
 
@@ -34,6 +39,7 @@ class OverlayService : Service() {
         get() = getSystemService(WINDOW_SERVICE) as WindowManager
 
     private lateinit var overlayView: OverlayView
+    private lateinit var button: ImageButton
 
     override fun onBind(intent: Intent): IBinder? = null
 
@@ -46,8 +52,20 @@ class OverlayService : Service() {
         startForeground(NOTIFICATION_ID, createNotification())
 
         val binding = BoardOverlayBinding.inflate(LayoutInflater.from(this))
-        overlayView = OverlayView(binding, resources) {
-            removeView(overlayView.binding.root)
+        overlayView = OverlayView(binding, resources)
+
+        button = ImageButton(this).apply {
+            setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.button_8_ball, null))
+            setOnClickListener {
+                it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+                binding.root.isVisible = !binding.root.isVisible
+            }
+
+            setOnLongClickListener {
+                removeView(overlayView.binding.root)
+                removeView(button)
+                true
+            }
         }
     }
 
@@ -57,7 +75,10 @@ class OverlayService : Service() {
 
         when (intent?.action) {
             ACTION_STOP_SERVICE -> stopService()
-            ACTION_START_SERVICE -> addView(overlayView.binding.root)
+            ACTION_START_SERVICE -> {
+                addView(overlayView.binding.root)
+                addButton(button)
+            }
         }
 
         return START_NOT_STICKY
@@ -67,6 +88,7 @@ class OverlayService : Service() {
         Log.d(TAG, "onDestroy")
         super.onDestroy()
 
+        removeView(button)
         removeView(overlayView.binding.root)
     }
 
@@ -122,12 +144,8 @@ class OverlayService : Service() {
         return builder.build()
     }
 
-    private fun addView(view: View) {
-        if (view.parent != null) return
-        Log.d(TAG, "addView")
-
-        val boardMarginBottom = resources.getDimension(R.dimen.boardMarginBottom)
-        val params = WindowManager.LayoutParams(
+    private val layoutParams: WindowManager.LayoutParams
+        get() = WindowManager.LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
@@ -135,17 +153,40 @@ class OverlayService : Service() {
             PixelFormat.TRANSLUCENT
         )
 
+    private fun addView(view: View) {
+        if (view.parent != null) return
+        Log.d(TAG, "addView")
+
+        val boardMarginBottom = resources.getDimension(R.dimen.boardMarginBottom)
+        val params = layoutParams
+
         params.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         params.gravity = Gravity.BOTTOM or Gravity.CENTER
         params.verticalMargin = boardMarginBottom
         windowManager.addView(view, params)
     }
 
-    private fun removeView(view: View) {
+    private fun addButton(view: View) {
+        if (view.parent != null) return
+        Log.d(TAG, "addButton")
+
+        val boardMarginBottom = resources.getDimension(R.dimen.boardMarginBottom)
+        val params = layoutParams
+
+        params.gravity = Gravity.BOTTOM or Gravity.END
+        params.verticalMargin = boardMarginBottom
+        params.horizontalMargin = boardMarginBottom
+        windowManager.addView(view, params)
+    }
+
+    private fun removeView(view: View): Boolean {
         if (view.parent != null) {
             Log.d(TAG, "removeView")
             windowManager.removeView(view)
+            return true
         }
+
+        return false
     }
 
     private fun stopService() {

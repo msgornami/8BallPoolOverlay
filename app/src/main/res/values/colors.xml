@@ -5,4 +5,5 @@
     <color name="colorRed">#912610</color>
     <color name="colorBlack">#000000</color>
     <color name="colorGrey">#B4B8B5</color>
+    <color name="colorAlphaGrey">#4DB4B8B5</color>
 </resources>

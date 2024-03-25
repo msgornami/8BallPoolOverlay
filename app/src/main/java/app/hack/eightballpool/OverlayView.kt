@@ -9,8 +9,7 @@ import app.hack.eightballpool.databinding.BoardOverlayBinding
 
 class OverlayView(
     val binding: BoardOverlayBinding,
-    private val resources: Resources,
-    private val onDismissCallback: () -> Unit
+    private val resources: Resources
 ) {
 
     private val TAG = "OverlayView"
@@ -116,11 +115,6 @@ class OverlayView(
             btnTrickshot.setOnClickListener(showTrickshot)
             btnNineBall.setOnClickListener(showNineBall)
             btnHide.setOnClickListener(hide)
-            btnHide.setOnLongClickListener {
-                Log.d(TAG, "onDismiss")
-                onDismissCallback()
-                true
-            }
         }
     }
 }

@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity() {
                 this, serviceIntent
             )
 
+            gameIntent?.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             runCatching { startActivity(gameIntent) }.onFailure {
                 Log.e(TAG, "launchGame", it)
             }
