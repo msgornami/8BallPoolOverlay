@@ -4,14 +4,14 @@
     <!-- Galaxy Note 10+ Landscape: X = 2280, Y = 1080 -->
 
     <!-- Board (میز بازی) -->
-    <dimen name="boardWidth" tools:ignore="PxUsage">1516px</dimen>
-    <dimen name="boardHeight" tools:ignore="PxUsage">786px</dimen>
-    <dimen name="boardMarginBottom" tools:ignore="PxUsage">10px</dimen>
+    <dimen name="boardWidth" tools:ignore="PxUsage">1590px</dimen>
+    <dimen name="boardHeight" tools:ignore="PxUsage">848px</dimen>
+    <dimen name="boardMarginBottom" tools:ignore="PxUsage">0px</dimen>
 
     <!-- Canvas (محیط رسم خطوط) -->
-    <dimen name="canvasWidth" tools:ignore="PxUsage">1364px</dimen>
-    <dimen name="canvasHeight" tools:ignore="PxUsage">640px</dimen>
-    <dimen name="canvasMarginTop" tools:ignore="PxUsage">229px</dimen>
+    <dimen name="canvasWidth" tools:ignore="PxUsage">1431px</dimen>
+    <dimen name="canvasHeight" tools:ignore="PxUsage">1040px</dimen>
+    <dimen name="canvasMarginTop" tools:ignore="PxUsage">195px</dimen>
 
     <!-- Buttons -->
     <dimen name="buttonWidth" tools:ignore="PxUsage">280px</dimen>
