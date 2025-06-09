@@ -19,5 +19,6 @@
     <dimen name="buttonNormalMarginStart" tools:ignore="PxUsage">200px</dimen>
     <dimen name="buttonNineBallMarginEnd" tools:ignore="PxUsage">40px</dimen>
     <dimen name="buttonCloseMarginEnd" tools:ignore="PxUsage">180px</dimen>
+    <dimen name="buttonMargin">16dp</dimen>
 
 </resources>
