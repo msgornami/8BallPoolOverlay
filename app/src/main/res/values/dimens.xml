@@ -5,8 +5,8 @@
 
     <!-- Board (میز بازی) -->
     <dimen name="boardWidth" tools:ignore="PxUsage">1590px</dimen>
-    <dimen name="boardHeight" tools:ignore="PxUsage">848px</dimen>
-    <dimen name="boardMarginBottom" tools:ignore="PxUsage">0px</dimen>
+    <dimen name="boardHeight" tools:ignore="PxUsage">900px</dimen>
+    <dimen name="boardMarginBottom" tools:ignore="PxUsage">37px</dimen>
 
     <!-- Canvas (محیط رسم خطوط) -->
     <dimen name="canvasWidth" tools:ignore="PxUsage">1431px</dimen>
