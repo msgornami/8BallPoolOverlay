@@ -1,37 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!--
-        My device: Xiaomi Mi A1
-        My android version: 9
 
-        Use the Landscape mode
-        In Landscape mode, the values X and Y are inverted
+    <!-- Galaxy Note 10+ Landscape: X = 2280, Y = 1080 -->
 
-        Portrait:
-        Device Width: X => 1080
-        Device Height: Y => 1920
+    <!-- Board (میز بازی) -->
+    <dimen name="boardWidth" tools:ignore="PxUsage">1960px</dimen>
+    <dimen name="boardHeight" tools:ignore="PxUsage">960px</dimen>
+    <dimen name="boardMarginBottom" tools:ignore="PxUsage">10px</dimen>
 
-        Landscape:
-        Device Width: X => 1920
-        Device Height: Y => 1080
-
-        Find the dimensions of your device in MainActivity ( DEBUG )
-
-        Add the android:background="@color/colorAlphaWhite" in layout ( RelativeLayout ) to help the adjusts
-    -->
-
-    <!-- Board -->
-    <dimen name="boardWidth" tools:ignore="PxUsage">1620px</dimen>
-    <dimen name="boardHeight" tools:ignore="PxUsage">897px</dimen>
-    <dimen name="boardMarginBottom" tools:ignore="PxUsage">0.0099px</dimen>
-
-    <!-- Canvas -->
-    <dimen name="canvasWidth" tools:ignore="PxUsage">1458px</dimen>
-    <dimen name="canvasHeight" tools:ignore="PxUsage">731px</dimen>
-    <dimen name="canvasMarginTop" tools:ignore="PxUsage">82px</dimen>
+    <!-- Canvas (محیط رسم خطوط) -->
+    <dimen name="canvasWidth" tools:ignore="PxUsage">1720px</dimen>
+    <dimen name="canvasHeight" tools:ignore="PxUsage">765px</dimen>
+    <dimen name="canvasMarginTop" tools:ignore="PxUsage">80px</dimen>
 
     <!-- Buttons -->
-    <dimen name="buttonWidth" tools:ignore="PxUsage">260px</dimen>
-    <dimen name="buttonHeight" tools:ignore="PxUsage">75px</dimen>
-    <dimen name="buttonMargin" tools:ignore="PxUsage">170px</dimen>
+    <dimen name="buttonWidth" tools:ignore="PxUsage">280px</dimen>
+    <dimen name="buttonHeight" tools:ignore="PxUsage">80px</dimen>
+    <dimen name="buttonNormalMarginStart" tools:ignore="PxUsage">200px</dimen>
+    <dimen name="buttonNineBallMarginEnd" tools:ignore="PxUsage">40px</dimen>
+    <dimen name="buttonCloseMarginEnd" tools:ignore="PxUsage">180px</dimen>
+
 </resources>
